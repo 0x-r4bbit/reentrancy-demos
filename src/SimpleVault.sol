@@ -1,7 +1,9 @@
 // SPDX-License-Identifier: UNLICENSED
 pragma solidity ^0.8.13;
 
-contract SimpleVault {
+import {ReentrancyGuard} from "@openzeppelin/contracts/security/ReentrancyGuard.sol";
+
+contract SimpleVault is ReentrancyGuard {
 
   mapping(address => uint) public balances;
 
@@ -12,7 +14,7 @@ contract SimpleVault {
     balances[msg.sender] += msg.value;
   }
 
-  function withdraw() external {
+  function withdraw() external nonReentrant {
     if (balances[msg.sender] == 0) {
       revert("Insufficient balance");
     }
@@ -23,6 +25,6 @@ contract SimpleVault {
       revert("Transfer failed");
     }
 
-    balances[msg.sender] -= balance;
+    balances[msg.sender] = 0;
   }
 }
