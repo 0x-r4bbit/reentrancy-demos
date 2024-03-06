@@ -18,10 +18,11 @@ contract SimpleVault {
     }
 
     uint256 balance = balances[msg.sender];
-    balances[msg.sender] = 0;
     (bool success, ) = msg.sender.call{value: balance}("");
     if (!success) {
       revert("Transfer failed");
     }
+
+    balances[msg.sender] -= balance;
   }
 }
