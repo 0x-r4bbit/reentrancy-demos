@@ -27,13 +27,14 @@ contract TokenVault is ReentrancyGuard {
       revert("Insufficient balance");
     }
 
-    (bool success, ) = msg.sender.call{value: balance}("");
-    if (!success) {
-      revert("Transfer failed");
-    }
-    success = token.burnAccount(msg.sender);
+    bool success = token.burnAccount(msg.sender);
     if (!success) {
       revert("Burn failed");
+    }
+
+    (success, ) = msg.sender.call{value: balance}("");
+    if (!success) {
+      revert("Transfer failed");
     }
   }
 }
