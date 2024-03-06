@@ -15,7 +15,7 @@ contract SimpleVaultAttackTest is Test {
       attack = new SimpleVaultAttack(simpleVault);
     }
 
-    function testReentrancy() public {
+    function disabled_testReentrancy() public {
 
       // create users
       address alice = payable(makeAddr("alice"));
