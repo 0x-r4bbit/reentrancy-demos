@@ -31,8 +31,8 @@ contract SimpleNFT is ERC721Enumerable {
     uint256 tokenId = counter;
     counter++;
 
-    _safeMint(msg.sender, tokenId);
     minted[msg.sender] = true;
+    _safeMint(msg.sender, tokenId);
   }
 
 }
